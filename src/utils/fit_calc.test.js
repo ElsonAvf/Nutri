@@ -21,23 +21,23 @@ describe('Lean Body Mass', () => {
 })
 
 test('Correct BMR male && female using the original Harris Benedict formula', () => {
-  expect(Fit.miffinStJeorBMR(61, 179, 20, 'm')).toBe(1634)
-  expect(Fit.miffinStJeorBMR(59, 165, 20, 'f')).toBe(1360)
+  expect(Fit.originalHarrisBenedictBMR(61, 179, 20, 'm')).toBe(1666)
+  expect(Fit.originalHarrisBenedictBMR(59, 165, 20, 'f')).toBe(1431)
 })
 
 test('Correct BMR male && female using the revised Harris Benedict formula', () => {
-  expect(Fit.miffinStJeorBMR(61, 179, 20, 'm')).toBe(1634)
-  expect(Fit.miffinStJeorBMR(59, 165, 20, 'f')).toBe(1360)
+  expect(Fit.revisedHarrisBenedictBMR(61, 179, 20, 'm')).toBe(1651)
+  expect(Fit.revisedHarrisBenedictBMR(59, 165, 20, 'f')).toBe(1418)
 })
 
-test('Correct BMR male && female using Miffin formula', () => {
-  expect(Fit.miffinStJeorBMR(61, 179, 20, 'm')).toBe(1634)
-  expect(Fit.miffinStJeorBMR(59, 165, 20, 'f')).toBe(1360)
+test('Correct BMR male && female using Mifflin formula', () => {
+  expect(Fit.mifflinStJeorBMR(61, 179, 20, 'm')).toBe(1634)
+  expect(Fit.mifflinStJeorBMR(59, 165, 20, 'f')).toBe(1360)
 })
 
-test('Correct BMR male && female using Katch-McArdle formula', () => {
-  expect(Fit.katchMcArdleBMR(61, 179,'m')).toBe(1524)
-  expect(Fit.katchMcArdleBMR(59, 165,'f')).toBe(1334)
+test('Correct BMR male && female using Katch-McArdle formula && boer LBM', () => {
+  expect(Fit.katchMcArdleBMR(Fit.boerLBM(61, 179, 'm'))).toBe(1524)
+  expect(Fit.katchMcArdleBMR(Fit.boerLBM(59, 165, 'f'))).toBe(1334)
 })
 
 describe('Correct BMR using Schofield formula', () => {
@@ -55,49 +55,68 @@ describe('Correct BMR using Schofield formula', () => {
   })
 })
 
-describe('Correct TDEE using Miffin BMR formula', () => {
+describe('Correct TDEE using Mifflin BMR formula && Boer LBM', () => {
   it('Should be correct for male', () => {
-    expect(Fit.TDEE(Fit.miffinStJeorBMR(61, 179, 20, 'm'))).toEqual({
-      sedentary: 1961,
-      light: 2246,
-      moderate: 2533,
-      heavy: 2819,
-      extremely: 3105,
-    })
+    expect(Fit.TDEE(Fit.mifflinStJeorBMR(61, 179, 20, 'm'))).toEqual([
+      {activity: 'Sedentary', kcal: 1961},
+      {activity: 'Light', kcal: 2246},
+      {activity: 'Moderate', kcal: 2533},
+      {activity: 'Heavy', kcal: 2819},
+      {activity: 'Extreme', kcal: 3105},
+    ])
   })
   it('Should be correct for female', () => {
-    expect(Fit.TDEE(Fit.miffinStJeorBMR(59, 165, 20, 'f'))).toEqual({
-      sedentary: 1632,
-      light: 1869,
-      moderate: 2108,
-      heavy: 2346,
-      extremely: 2584
+    expect(Fit.TDEE(Fit.mifflinStJeorBMR(59, 165, 20, 'f'))).toEqual([
+      {activity: 'Sedentary', kcal: 1632},
+      {activity: 'Light', kcal: 1869},
+      {activity: 'Moderate', kcal: 2108},
+      {activity: 'Heavy', kcal: 2346},
+      {activity: 'Extreme', kcal: 2584}
+  ])
+})
+})
+describe('Correct TDEE using Katch-McArdle BMR formula && Boer LBM', () => {
+  it('Should be correct for male', () => {
+    expect(Fit.TDEE(Fit.katchMcArdleBMR(Fit.boerLBM(61, 179, 'm')))).toEqual([
+      {activity: 'Sedentary', kcal: 1829},
+      {activity: 'Light', kcal: 2095},
+      {activity: 'Moderate', kcal: 2362},
+      {activity: 'Heavy', kcal: 2629},
+      {activity: 'Extreme', kcal: 2896},
+    ])
   })
+  it('Should be correct for female', () => {
+    expect(Fit.TDEE(Fit.katchMcArdleBMR(Fit.boerLBM(59, 165, 'f')))).toEqual([
+      {activity: 'Sedentary', kcal: 1601},
+      {activity: 'Light', kcal: 1834},
+      {activity: 'Moderate', kcal: 2068},
+      {activity: 'Heavy', kcal: 2301},
+      {activity: 'Extreme', kcal: 2535}
+  ])
 })
 })
 
 test('Correct IBW for male', () => {
-  expect(Fit.IBW(179, 'm')).toEqual({
-    peterson: 71,
-    devine: 74,
-    robinson: 72,
-    miller: 71,
-    hamwi: 76,
-    broca: 71,
-    lemmens: 70,
-    bmi: { min: 59, max: 80 }
-  })
+  expect(Fit.IBW(179, 'm')).toEqual([
+    {name: 'Peterson', result: 71},
+    {name: 'Robinson', result: 72},
+    {name: 'Devine', result: 74},
+    {name: 'Miller', result: 71},
+    {name: 'Hamwi', result: 76},
+    {name: 'Broca', result: 71},
+    {name: 'Lemmens', result: 70},
+    {name: 'BMI', result: { min: 59, max: 80 }}
+  ])
 })
-
 test('Correct IBW for female', () => {
-  expect(Fit.IBW(165, 'f')).toEqual({
-    peterson: 60,
-    devine: 57,
-    robinson: 57,
-    miller: 60,
-    hamwi: 56,
-    broca: 55,
-    lemmens: 60,
-    bmi: { min: 50, max: 68 }
-  })
+  expect(Fit.IBW(165, 'f')).toEqual([
+    {name: 'Peterson', result: 60},
+    {name: 'Robinson', result: 57},
+    {name: 'Devine', result: 57},
+    {name: 'Miller', result: 60},
+    {name: 'Hamwi', result: 56},
+    {name: 'Broca', result: 55},
+    {name: 'Lemmens', result: 60},
+    {name: 'BMI', result: { min: 50, max: 68 }}
+  ])
 })
