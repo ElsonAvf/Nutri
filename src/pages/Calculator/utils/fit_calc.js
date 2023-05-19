@@ -157,6 +157,28 @@ class Fit {
       max: Math.round(24.9 * (cmToMeter(height) ** 2))
     }
   }
+  macros(TDEE) {
+    const protein = 4, carb = 4, fat = 9 // Kcal per gram
+    const lossWeight = TDEE - (TDEE * 0.2)
+    const gainWeight = TDEE + 500
+    return {
+      loss: {
+        protein: Math.round(lossWeight * 0.4 / protein),
+        carb: Math.round(lossWeight * 0.4 / carb),
+        fat: Math.round(lossWeight * 0.2 / fat)
+      },
+      maintenance: {
+        protein: Math.round(TDEE * 0.3 / protein),
+        carb: Math.round(TDEE * 0.4 / carb),
+        fat: Math.round(TDEE * 0.3 / fat)
+      },
+      gain: {
+        protein: Math.round(gainWeight * 0.3 / protein),
+        carb: Math.round(gainWeight * 0.4 / carb),
+        fat: Math.round(gainWeight * 0.3 / fat)
+      }
+    }
+  }
 }
 
 const fit = new Fit()

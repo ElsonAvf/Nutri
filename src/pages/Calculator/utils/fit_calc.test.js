@@ -120,3 +120,14 @@ test('Correct IBW for female', () => {
     {name: 'BMI', result: { min: 50, max: 68 }}
   ])
 })
+
+describe('Macros', () => {
+  const TDEE = Fit.TDEE(Fit.mifflinStJeorBMR(61, 179, 20, 'm'))
+  test('macros diets',() => {
+    expect(Fit.macros(TDEE[0].kcal)).toEqual({
+        loss: { protein: 146, carb: 146, fat: 32},
+        maintenance: { protein: 137, carb: 183, fat: 61 },
+        gain: { protein: 175, carb: 233, fat: 78 }
+    })
+  })
+})
