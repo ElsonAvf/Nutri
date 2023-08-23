@@ -82,13 +82,14 @@ class Fit {
   };
   // Total Daily Energy Expenditure
   TDEE(BMR) {
-    return [
-      { activity: 'Sedentary', kcal: Math.round(1.2 * BMR) },
-      { activity: 'Light', kcal: Math.round(1.3745 * BMR) },
-      { activity: 'Moderate', kcal: Math.round(1.55 * BMR) },
-      { activity: 'Heavy', kcal: Math.round(1.725 * BMR) },
-      { activity: 'Extreme', kcal: Math.round(1.9 * BMR) }
-    ]
+    return {
+      sedentary: Math.round(1.2 * BMR),
+      light: Math.round(1.3745 * BMR),
+      moderate: Math.round(1.55 * BMR),
+      heavy: Math.round(1.725 * BMR),
+      extreme: Math.round(1.9 * BMR),
+    }
+
   }
   // Ideal Body Weight
   IBW(height, gender) {
@@ -155,28 +156,6 @@ class Fit {
     return {
       min: Math.round(18.5 * (cmToMeter(height) ** 2)),
       max: Math.round(24.9 * (cmToMeter(height) ** 2))
-    }
-  }
-  macros(TDEE) {
-    const protein = 4, carb = 4, fat = 9 // Kcal per gram
-    const lossWeight = TDEE - (TDEE * 0.2)
-    const gainWeight = TDEE + 500
-    return {
-      loss: {
-        protein: Math.round(lossWeight * 0.4 / protein),
-        carb: Math.round(lossWeight * 0.4 / carb),
-        fat: Math.round(lossWeight * 0.2 / fat)
-      },
-      maintenance: {
-        protein: Math.round(TDEE * 0.3 / protein),
-        carb: Math.round(TDEE * 0.4 / carb),
-        fat: Math.round(TDEE * 0.3 / fat)
-      },
-      gain: {
-        protein: Math.round(gainWeight * 0.3 / protein),
-        carb: Math.round(gainWeight * 0.4 / carb),
-        fat: Math.round(gainWeight * 0.3 / fat)
-      }
     }
   }
 }
