@@ -1,4 +1,3 @@
-import Fit from './fit_calc.js';
 import BMI from './BMI/BMI';
 import BMR from './BMR/BMR';
 import TDEE from './TDEE/TDEE';
