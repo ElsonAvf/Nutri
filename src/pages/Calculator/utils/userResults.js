@@ -6,11 +6,8 @@ import LBM from './LBM/LBM';
 
 export const getUserResults = userInfo => {
   const info = { ...userInfo } // Prevent mutation
-  if(isNaN(info.LBM)) {
-    const lbm = new LBM(info);
-    info.LBM = lbm[info.LBM]();
-    ;
-  }
+  const lbm = new LBM(info);
+  info.LBM = lbm[info.LBM]();
   const bmr = new BMR(info);
   const bmrResult = bmr[info.BMRFormula]();
   const ibw = new IBW(info);
