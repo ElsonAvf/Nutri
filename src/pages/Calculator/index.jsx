@@ -40,7 +40,7 @@ export default function Calculator() {
 
   return (
     <main>
-      <ul className='px-4 lg:mx-auto lg:max-w-md flex flex-col items-center mb-5'>
+      <ul className='px-4 mx-auto max-w-md flex flex-col mb-5'>
         <li><b>IMC</b> - Índice de Massa Corporal </li>
         <li><b>IBW</b> - Peso Corporal Ideal</li>
         <li><b>TMB</b> - Taxa Metabólica Basal</li>
@@ -48,7 +48,7 @@ export default function Calculator() {
       </ul>
       <FormProvider {...methods} >
         <form
-          className='mx-auto w-[95%] lg:max-w-md lg:rounded shadow border border-solid border-neutral-400 bg-[honeydew] py-7 px-4 flex flex-col gap-4 mb-10'
+          className='mx-auto w-[95%] md:max-w-md shadow border border-solid border-neutral-400 bg-[honeydew] py-7 px-4 flex flex-col gap-4 mb-10'
           onSubmit={methods.handleSubmit(onSubmit)}
           novalidation='true'
         >
