@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    background-color: ghostwhite;
+  }
+  
+  input {
+    outline: none;
+  }
+  
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@layer components {
+  .btn {
+    border: 2px solid limegreen;
+    background-color: honeydew;
+    color: limegreen;
+    user-select: none;
+  }
+  
+  .btn-primary {
+    @apply py-2 px-8 bg-[limegreen] text-[ghostwhite] rounded select-none shadow
+  }
+  
+  @media (hover: hover) {
+    .btn:hover {
+      background-color: limegreen;
+      color: honeydew;
+    }
+    
+    .btn-primary:hover {
+      @apply bg-[limegreen]/70
+    }
+  }
+  
+  @media (hover: none) {
+    .btn:active {
+      background-color: limegreen;
+      color: honeydew;
+    }
+    
+    .btn-primary:active {
+      @apply bg-[limegreen]/70
+    }
+  }
+  
+  .action {
+    @apply pl-2 py-2 outline outline-1 outline-neutral-500 rounded bg-[ghostwhite]
+  }
+  
+  .action:focus {
+    @apply outline-2 outline-black
+  }
+  
+  .caption {
+    position: absolute;
+    bottom: 0;
+    padding: 3px;
+    background-color: ghostwhite;
+    font-weight: bold;
+    max-width: 95%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    user-select: none;
+  }
+  
+  .measurement-unit {
+    @apply ml-1 h-full align-bottom text-neutral-500
+  }
+}
