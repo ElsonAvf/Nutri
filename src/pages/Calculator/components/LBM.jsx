@@ -1,31 +1,24 @@
-import { LBMFieldset, LBMLegend, Label, LBMLabel, Input, Select, Span } from './../styles/Calculator.style.js';
+import { useFormContext } from 'react-hook-form';
 
-const LBM = ({ lbm, setLBM }) => {
+export default function LBM() {
+  const { register, setValue, formState: { errors } } = useFormContext();
+
   return (
-    <LBMFieldset>
-      <LBMLegend>LBM - Massa Corporal Magra</LBMLegend>
-      <LBMLabel>
-        Sua massa magra
-        <div>
-          <Input
-            type='number'
-            name='LBM'
-            value={!isNaN(lbm) ? lbm : ''}
-            onChange={setLBM}
-          />
-          <Span>kg</Span>
-        </div>
-      </LBMLabel>
-      <Label>
-        Fórmula
-        <Select name='LBM' value={isNaN(lbm) && lbm} onChange={setLBM}>
-          <option value='boerLBM'>Boer</option>
-          <option value='humeLBM'>Hume</option>
-          <option value='jamesLBM'>James</option>
-        </Select>
-      </Label>
-    </LBMFieldset>
-  )
-}
-
-export default LBM;
+    <fieldset className='mt-4'>
+      <legend className=''>LBM - Massa Corporal Magra</legend>
+      <label>
+        <span className='text-sm'>Fórmula</span>
+        <select
+          className='action block'
+          {...register('LBM', {
+            required: 'LBM é obrigatório'
+          })}
+        >
+          <option value='boer'>Boer</option>
+          <option value='hume'>Hume</option>
+          <option value='james'>James</option>
+        </select>
+      </label>
+    </fieldset>
+  );
+};
