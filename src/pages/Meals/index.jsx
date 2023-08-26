@@ -24,7 +24,6 @@ export default function MealsPlanner() {
     return () => window.removeEventListener('storage', handleStorage)
   }, [])
 
-  console.log(meals)
   return (
     <main className='flex flex-col items-center pb-12'>
       <h2 className='text-2xl font-bold'>Refeições</h2>
