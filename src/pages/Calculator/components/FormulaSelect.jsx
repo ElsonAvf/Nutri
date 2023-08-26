@@ -1,28 +1,30 @@
-import { Label, Select } from './../styles/Calculator.style.js';
+import { useFormContext } from 'react-hook-form';
 
-const FormulaSelect = ({ formula, setFormula }) => {
+export default function FormulaSelect({ formula, setFormula }) {
+  const { register } = useFormContext();
   return (
-    <Label>
+    <label>
       Fórmula de TMB
-      <Select name='BMRFormula' value={formula} onChange={setFormula}>
-        <option value='originalHarrisBenedictBMR'>
+      <select
+        className='w-full action text-xs text-center'
+        {...register('BMRFormula')}
+      >
+        <option value='originalHarrisBenedict'>
           Harris Benedict (1919)
         </option>
-        <option value='revisedHarrisBenedictBMR'>
+        <option value='revisedHarrisBenedict'>
           Harris Benedict revisado por Rozan e Shizgan (1984)
         </option>
-        <option value='mifflinStJeorBMR' >
+        <option value='mifflinStJeor' >
           Mifflin-St Jeor (1990)
         </option>
-        <option value='katchMcArdleBMR'>
+        <option value='katchMcArdle'>
           Katch-McArdle (2001)
         </option>
-        <option value='schofieldBMR'>
+        <option value='schofield'>
           Schofield (1985)
         </option>
-      </Select>
-    </Label>
+      </select>
+    </label>
   );
 };
-
-export default FormulaSelect;
