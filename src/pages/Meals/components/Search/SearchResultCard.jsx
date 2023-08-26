@@ -1,14 +1,12 @@
-import { useDispatch } from 'react-redux';
 import Icon from '@mdi/react';
 import { mdiPlus } from '@mdi/js';
-import { addFood } from 'features/meals/mealsSlice.js';
+import { addFood } from 'storage/storage.js';
 import Macro from './Macro';
 
 export default function SearchResultCard({ food, meal, close }) {
-  const dispatch = useDispatch()
 
   const handleClick = () => {
-    dispatch(addFood({ food, meal }));
+    addFood(food, meal);
     close();
   };
 
