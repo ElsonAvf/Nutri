@@ -1,24 +1,27 @@
-import { Label, ValidityInput, Span } from './../styles/Calculator.style.js';
+import { useFormContext } from 'react-hook-form';
 
-const HeightInput = ({ height, setHeight }) => {
+export default function HeightInput() {
+  const { register, formState: { errors } } = useFormContext()
   return (
-    <Label>
-      Altura *
+    <label>
       <div>
-        <ValidityInput
-          type='number'
-          name='height'
-          min='50'
-          max='272'
-          placeholder='175'
-          required
-          value={height}
-          onChange={setHeight}
-        />
-        <Span>cm</Span>
+        Altura <span aria-hidden className='text-red-400'>*</span>
       </div>
-    </Label>
+      <input
+        className='inline-block action w-14'
+        type='number'
+        placeholder='175'
+        {
+        ...register('height', {
+          required: 'A altura é obrigatória',
+          min: { value: 50, message: 'Altura mínima é de 50cm' },
+          max: { value: 272, message: 'Altura máxima é de 272cm' },
+          valueAsNumber: true
+        })
+        }
+      />
+      <span className='measurement-unit'>cm</span>
+      {errors.height && <span>{errors.height.message}</span>}
+    </label>
   );
 };
-
-export default HeightInput;
