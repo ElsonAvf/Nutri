@@ -1,17 +1,13 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './pages/App';
-import { Provider } from 'react-redux';
-import { store } from './store/store.js';
 import { createStorage } from './storage/storage.js'
+
+createStorage() // Create storage if it doesnt exist
 
 const root = createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <App />
   </React.StrictMode>
 );
-
-createStorage() // Create a storage if it doesnt exist
