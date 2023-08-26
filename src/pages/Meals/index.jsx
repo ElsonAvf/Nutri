@@ -1,13 +1,12 @@
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
 import MealsCarousel from './components/MealsCarousel';
 import MealsStatus from './components/MealsStatus';
 import SaveSuccessfulPopUp from './components/SaveSuccessfulPopUp';
-import { setStorage } from 'storage/storage.js'
+import { setStorage, getStorage } from 'storage/storage.js'
 import Search from './components/Search';
 
 export default function MealsPlanner() {
-  const meals = useSelector(state => state.meals)
+  const [meals, setMeals] = useState(getStorage())
   const [showSearchModal, setShowSearchModal] = useState(false)
   const [showSuccessfulPopUp, setShowSuccessfulPopUp] = useState(false);
   const [mealType, setMealType] = useState('');
@@ -17,6 +16,15 @@ export default function MealsPlanner() {
     setShowSuccessfulPopUp(true)
   }
 
+  useEffect(() => {
+    const handleStorage = () => {
+      setMeals(getStorage())
+    }
+    window.addEventListener('storage', handleStorage)
+    return () => window.removeEventListener('storage', handleStorage)
+  }, [])
+
+  console.log(meals)
   return (
     <main className='flex flex-col items-center pb-12'>
       <h2 className='text-2xl font-bold'>Refeições</h2>
